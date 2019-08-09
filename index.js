@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const connect = ()=>{
 	return mongoose.connect('mongodb://localhost:27017/5_mongoose', 
 		{useNewUrlParser: true});		
-}
+};
+const test_id = '5acfb053c49b960aa82ae613';
 const user = new mongoose.Schema({
 	gender: {
 		type: String,
@@ -20,17 +21,14 @@ const user = new mongoose.Schema({
 		size: {type: Number},
 	},
 	list: [{type: String}],
-});
-const UserModel = mongoose.model('user', user);
+}, {timestamps: true});
+const User_model = mongoose.model('user', user);
 connect()
 	.then(async connection=>{
-		const user = await UserModel.create({
-			gender: 'M',
-			displayName: 'Petya',
-			email: 'petya@mail.com',
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		});
-		console.log(user);
+		//const user = await UserModel({});
+		const found = await User_model({displayName: 'Petya'}); // to get all use {} it is like * in SQL
+		const foundById = await User_model.findById(test_id);
+		const updated = await User_model.findByIdAndUpdate(test_id, 				{displayName: 'Borya'});
+		console.log(found, foundById, updated);
 	})
 	.catch(console.error);
