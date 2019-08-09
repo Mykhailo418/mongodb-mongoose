@@ -4,11 +4,22 @@ const connect = ()=>{
 		{useNewUrlParser: true});		
 }
 const user = new mongoose.Schema({
-	gender: String,
+	gender: {
+		type: String,
+		required: true,
+	},
 	displayName: String,
-	email: String,
+	email: {
+		type: String,
+		unique: true,
+	},
 	createdAt: Date,
 	updatedAt: Date,
+	info: {
+		school: {type: String},
+		size: {type: Number},
+	},
+	list: [{type: String}],
 });
 const UserModel = mongoose.model('user', user);
 connect()
