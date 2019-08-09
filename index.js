@@ -21,14 +21,20 @@ const user = new mongoose.Schema({
 		size: {type: Number},
 	},
 	list: [{type: String}],
+	defaultValue: {
+		type: Boolean,
+		default: true
+	},
 }, {timestamps: true});
 const User_model = mongoose.model('user', user);
 connect()
 	.then(async connection=>{
 		//const user = await UserModel({});
-		const found = await User_model({displayName: 'Petya'}); // to get all use {} it is like * in SQL
-		const foundById = await User_model.findById(test_id);
-		const updated = await User_model.findByIdAndUpdate(test_id, 				{displayName: 'Borya'});
+		// to get all use {} it is like * in SQL
+		const found = await User_model.find({displayName: 'Petya'}).exec(); 
+		const foundById = await User_model.findById(test_id).exec();
+		const updated = await User_model.findOneAndUpdate({_id: test_id},	
+			{displayName: 'Borya'}).exec();
 		console.log(found, foundById, updated);
 	})
 	.catch(console.error);
