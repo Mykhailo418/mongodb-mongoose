@@ -23,9 +23,18 @@ const user = new mongoose.Schema({
 	list: [{type: String}],
 	defaultValue: {
 		type: Boolean,
-		default: true
+		default: true,
+	},
+	country: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: 'country',
 	},
 }, {timestamps: true});
+const country_schema = new mongoose.Schema({
+	name: String,
+});
+const Country_model = mongoose.model('country', country_schema);
 const User_model = mongoose.model('user', user);
 connect()
 	.then(async connection=>{
@@ -34,7 +43,7 @@ connect()
 		const found = await User_model.find({displayName: 'Petya'}).exec(); 
 		const foundById = await User_model.findById(test_id).exec();
 		const updated = await User_model.findOneAndUpdate({_id: test_id},	
-			{displayName: 'Borya'}).exec();
+			{displayName: 'Borya'}, {new: true}).exec(); // new: true - means return updated user
 		console.log(found, foundById, updated);
 	})
 	.catch(console.error);
