@@ -3,7 +3,7 @@ const connect = ()=>{
 	return mongoose.connect('mongodb://localhost:27017/5_mongoose', 
 		{useNewUrlParser: true});		
 };
-const test_id = '5acfb053c49b960aa82ae613';
+const test_id = '5d5063604f02fb01396a8faa';
 const user = new mongoose.Schema({
 	gender: {
 		type: String,
@@ -32,18 +32,24 @@ const user = new mongoose.Schema({
 	},
 }, {timestamps: true});
 const country_schema = new mongoose.Schema({
-	name: String,
+	name: {type: String, unique: true},
 });
 const Country_model = mongoose.model('country', country_schema);
 const User_model = mongoose.model('user', user);
 connect()
 	.then(async connection=>{
-		//const user = await UserModel({});
 		// to get all use {} it is like * in SQL
 		const found = await User_model.find({displayName: 'Petya'}).exec(); 
-		const foundById = await User_model.findById(test_id).exec();
-		const updated = await User_model.findOneAndUpdate({_id: test_id},	
-			{displayName: 'Borya'}, {new: true}).exec(); // new: true - means return updated user
+		const foundById = await User_model.findById(test_id)
+			.populate('country')
+			.exec();
+			const updated = await User_model.findOneAndUpdate({_id: test_id},	
+			{displayName: 'Anna'}, 
+			{
+				upsert: true, // upsert: true - if found nothing - create
+				new: true	// new: true - return updated user,	
+			}) 
+			.exec();
 		console.log(found, foundById, updated);
 	})
 	.catch(console.error);
