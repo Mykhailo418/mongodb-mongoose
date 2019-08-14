@@ -50,6 +50,18 @@ connect()
 				new: true	// new: true - return updated user,	
 			}) 
 			.exec();
-		console.log(found, foundById, updated);
+		const specific = await User_model.find({
+			createdAt: {
+				$gt: new Date('01-01-2019'), // greater than 
+				$lt: new Date('09-01-2019'), // less then
+			},
+			gender: 'F',
+			//list: 'item1', // if includes such value in the array
+			list: {$in: ['item2', 'item3']}, // match any value in array
+		})
+		.sort({createdAt: -1})
+		.limit(2)
+		.exec();
+		console.log(specific);
 	})
 	.catch(console.error);
