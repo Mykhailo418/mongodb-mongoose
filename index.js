@@ -30,6 +30,10 @@ const user = new mongoose.Schema({
 		required: true,
 		ref: 'country',
 	},
+	similarUsers: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'user',
+	}],
 }, {timestamps: true});
 const country_schema = new mongoose.Schema({
 	name: {type: String, unique: true},
@@ -61,8 +65,13 @@ connect()
 		})
 		.sort({createdAt: -1})
 		.limit(2)
-		.select(['displayName', 'email', 'createdAt']) // get specific fields
+		.select(['displayName', 'email', 'createdAt', '_id']) // get specific fields
 		.exec();
-		console.log(specific);
+		// updating array by adding new values from another array
+		const usersToAdd = [found[0]._id, foundById._id];
+		const updatedById = await User_model.findByIdAndUpdate(specific[0]._id, {
+			$push: {similarUsers: {$each: usersToAdd}}
+		}).exec();
+		console.log(specific, updatedById);
 	})
 	.catch(console.error);
