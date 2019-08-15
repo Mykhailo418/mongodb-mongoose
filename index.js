@@ -69,9 +69,11 @@ connect()
 		.exec();
 		// updating array by adding new values from another array
 		const usersToAdd = [found[0]._id, foundById._id];
-		const updatedById = await User_model.findByIdAndUpdate(specific[0]._id, {
-			$push: {similarUsers: {$each: usersToAdd}}
-		}).exec();
+		const updatedById = await updateUsersArrayById(specific[0]._id, usersToAdd);
 		console.log(specific, updatedById);
-	})
-	.catch(console.error);
+	}).catch(console.error);
+function updateUsersArrayById(id, arr){
+	return User_model.findByIdAndUpdate(id, {
+		$push: {similarUsers: {$each: arr}}
+	}).exec();
+}
