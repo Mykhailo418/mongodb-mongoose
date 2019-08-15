@@ -61,6 +61,7 @@ connect()
 		})
 		.sort({createdAt: -1})
 		.limit(2)
+		.select(['displayName', 'email', 'createdAt']) // get specific fields
 		.exec();
 		console.log(specific);
 	})
