@@ -4,6 +4,7 @@ const connect = ()=>{
 		{useNewUrlParser: true});		
 };
 const test_id = '5d5063604f02fb01396a8faa';
+// Schemas
 const user = new mongoose.Schema({
 	gender: {
 		type: String,
@@ -38,6 +39,12 @@ const user = new mongoose.Schema({
 const country_schema = new mongoose.Schema({
 	name: {type: String, unique: true},
 });
+// Virtuals
+user.virtual('similarUsersCount')
+	.get(function(){
+		return this.similarUsers.length;
+	});
+// Models
 const Country_model = mongoose.model('country', country_schema);
 const User_model = mongoose.model('user', user);
 connect()
@@ -67,13 +74,14 @@ connect()
 		.limit(2)
 		.select(['displayName', 'email', 'createdAt', '_id']) // get specific fields
 		.exec();
-		// updating array by adding new values from another array
 		const usersToAdd = [found[0]._id, foundById._id];
-		const updatedById = await updateUsersArrayById(specific[0]._id, usersToAdd);
-		console.log(specific, updatedById);
+		//const updatedById = await updateUsersArrById(specific[0]._id, usersToAdd);
+		console.log(updated.similarUsersCount);
 	}).catch(console.error);
-function updateUsersArrayById(id, arr){
+function updateUsersArrById(id, arr){
+	// updating array by adding new values from another array
 	return User_model.findByIdAndUpdate(id, {
 		$push: {similarUsers: {$each: arr}}
-	}).exec();
+	}, {new: true})
+	.exec();
 }
