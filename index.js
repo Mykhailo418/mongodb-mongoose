@@ -39,6 +39,20 @@ const user = new mongoose.Schema({
 const country_schema = new mongoose.Schema({
 	name: {type: String, unique: true},
 });
+// Middlewares(Hooks)
+user.pre('find', function(){
+	console.log('before find');
+});
+user.post('find', function(){
+	console.log('after find');
+});
+user.post('find', function(doc, next){
+	// if there are 2 arguments it consider this like an async function
+	setTimeout(()=>{
+		console.log('async after find');
+		next();
+	}, 100);
+});
 // Virtuals
 user.virtual('similarUsersCount')
 	.get(function(){
