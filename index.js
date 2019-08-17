@@ -98,7 +98,12 @@ connect()
 		.exec();
 		const usersToAdd = [found[0]._id, foundById._id];
 		//const updatedById = await updateUsersArrById(specific[0]._id, usersToAdd);
-		console.log(updated.similarUsersCount);
+		const paginated = await User_model.find({})
+			.sort({createdAt: 1})
+			.skip(2)
+			.limit(4)
+			.exec();
+		console.log(paginated);
 	}).catch(console.error);
 function updateUsersArrById(id, arr){
 	// updating array by adding new values from another array
