@@ -10,7 +10,10 @@ const user = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	displayName: String,
+	displayName: {
+		type: String,
+		unique: false
+	},
 	email: {
 		type: String,
 		unique: true,
@@ -53,6 +56,11 @@ user.post('find', function(doc, next){
 		next();
 	}, 100);
 });
+// Indexes
+user.index({
+	country: 1,
+	displayName: 1,
+}, {unique: true});
 // Virtuals
 user.virtual('similarUsersCount')
 	.get(function(){
