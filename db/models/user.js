@@ -34,6 +34,7 @@ const user = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user',
 	}],
+	any: mongoose.Mixed,
 }, {timestamps: true});
 // Middlewares(Hooks)
 user.pre('find', function(){

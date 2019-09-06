@@ -25,7 +25,9 @@ db.connect()
 	const usersToAdd = [found[0]._id, foundById._id];
 	//const updatedById = await user.updateUsersArrById(specific[0]._id, usersToAdd);
 	const paginated = await user.get_paginated({});
-	console.log(found, foundById, updated, specific, paginated);
+	const nested = await user.find({"any.details.name": "Vasya"});
+	//console.log(found, foundById, updated, specific, paginated);
+	console.log(nested);
 	db.disconnect();
 })
 .catch(console.error);
