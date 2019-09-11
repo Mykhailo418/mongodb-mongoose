@@ -25,6 +25,8 @@ db.connect()
 	const usersToAdd = [found[0]._id, foundById._id];
 	//const updatedById = await user.updateUsersArrById(specific[0]._id, usersToAdd);
 	const paginated = await user.get_paginated({});
+	// nesting also works for arrays, ex: if any.details is array and has
+	// objects like {name: string}
 	const nested = await user.find({"any.details.name": "Vasya"});
 	//console.log(found, foundById, updated, specific, paginated);
 	console.log(nested);
