@@ -17,6 +17,9 @@ E.update = function(params, data){
 		}) 
 		.exec();
 };
+E.updateMany = function(params, data){
+	return User_model.updateMany(params, data).exec();
+};
 E.get_paginated = function(params){
 	return User_model.find(params)
 		.sort({createdAt: 1})

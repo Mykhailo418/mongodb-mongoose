@@ -21,6 +21,10 @@ const user = new mongoose.Schema({
 		size: {type: Number},
 	},
 	list: [{type: String}],
+	listObjects: [{
+		title: {type: String},
+		count: {type: Number},
+	}],
 	defaultValue: {
 		type: Boolean,
 		default: true,

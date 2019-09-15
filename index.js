@@ -28,8 +28,18 @@ db.connect()
 	// nesting also works for arrays, ex: if any.details is array and has
 	// objects like {name: string}
 	const nested = await user.find({"any.details.name": "Vasya"});
+	const updatedArray = await user.updateMany({
+		listObjects: {
+			$elemMatch: {
+				count: {$gte: 2},
+				title: "head",
+			}
+		}
+	}, {
+		$set: {"listObjects.$.title": "updated"},	
+	});
 	//console.log(found, foundById, updated, specific, paginated);
-	console.log(nested);
+	console.log(updatedArray);
 	db.disconnect();
 })
 .catch(console.error);
