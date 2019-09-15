@@ -32,11 +32,14 @@ db.connect()
 		listObjects: {
 			$elemMatch: {
 				count: {$gte: 2},
-				title: "head",
+				title: {$exists: true},
 			}
 		}
 	}, {
-		$set: {"listObjects.$.title": "updated"},	
+		$set: {
+			//"listObjects.$.title": "updated", // updating first matched objects
+			"listObjects.$[].title": "updated", // update all objects
+		},	
 	});
 	//console.log(found, foundById, updated, specific, paginated);
 	console.log(updatedArray);
