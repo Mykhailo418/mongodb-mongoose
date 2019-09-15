@@ -23,7 +23,7 @@ db.connect()
 		.select(['displayName', 'email', 'createdAt', '_id']) // get specific fields
 		.exec();
 	const usersToAdd = [found[0]._id, foundById._id];
-	//const updatedById = await user.updateUsersArrById(specific[0]._id, usersToAdd);
+	const updatedById = await user.updateUsersArrById(specific[0]._id, usersToAdd);
 	const paginated = await user.get_paginated({});
 	// nesting also works for arrays, ex: if any.details is array and has
 	// objects like {name: string}

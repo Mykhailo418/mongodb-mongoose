@@ -30,7 +30,8 @@ E.get_paginated = function(params){
 E.updateUsersArrById = function(id, arr){
 	// updating array by adding new values from another array
 	return User_model.findByIdAndUpdate(id, {
-		$push: {similarUsers: {$each: arr}}
+		//$push: {similarUsers: {$each: arr}}
+		$addToSet: {similarUsers: {$each: arr}} // add values if they not exist
 	}, {new: true})
 	.exec();
 }
