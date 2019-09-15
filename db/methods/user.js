@@ -17,8 +17,8 @@ E.update = function(params, data){
 		}) 
 		.exec();
 };
-E.updateMany = function(params, data){
-	return User_model.updateMany(params, data).exec();
+E.updateMany = function(params, data, options){
+	return User_model.updateMany(params, data, options).exec();
 };
 E.get_paginated = function(params){
 	return User_model.find(params)

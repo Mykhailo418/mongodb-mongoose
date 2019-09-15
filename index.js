@@ -41,8 +41,24 @@ db.connect()
 			"listObjects.$[].title": "updated", // update all objects
 		},	
 	});
+	const updatedArray2 = await user.updateMany({
+		listObjects: {
+			$elemMatch: {
+				count: {$gte: 2},
+				title: {$exists: true},
+			}
+		}
+	}, {
+		$set: {
+			"listObjects.$[el].title": "updated2", // updating spicifc object(s)
+		},	
+	}, {
+		arrayFilters: [{
+			"el.count": {$gt: 2} // "el" is an matched object
+		}]
+	});
 	//console.log(found, foundById, updated, specific, paginated);
-	console.log(updatedArray);
+	console.log(updatedArray, updatedArray2);
 	db.disconnect();
 })
 .catch(console.error);
