@@ -34,3 +34,6 @@ E.updateUsersArrById = function(id, arr){
 	}, {new: true})
 	.exec();
 }
+E.removeElemFromArray = function(params, arrName, conditions){
+	return User_model.updateMany(params, {$pull: {[arrName]: conditions}});
+}

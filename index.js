@@ -57,6 +57,8 @@ db.connect()
 			"el.count": {$gt: 2} // "el" is an matched object
 		}]
 	});
+	await user.removeElemFromArray({email: "anya@gmail.com"}, "listObjects", 
+		{title: "updated"});
 	//console.log(found, foundById, updated, specific, paginated);
 	console.log(updatedArray, updatedArray2);
 	db.disconnect();
