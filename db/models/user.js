@@ -59,7 +59,10 @@ user.post('find', function(doc, next){
 user.index({
 	country: 1,
 	displayName: 1,
-}, {unique: true});
+}, {
+	unique: true,
+	background: true,
+});
 user.index({
 	displayName: 'text',
 	desc: 'text',
