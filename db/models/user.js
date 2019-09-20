@@ -60,7 +60,15 @@ user.index({
 	country: 1,
 	displayName: 1,
 }, {unique: true});
-user.index({desc: 'text'});
+user.index({
+	displayName: 'text',
+	desc: 'text',
+}, {
+	weights: { // weights for current fields for searching
+		displayName: 10,
+		desc: 1,		
+	}
+});
 // Virtuals
 user.virtual('similarUsersCount')
 	.get(function(){
