@@ -39,5 +39,9 @@ E.removeElemFromArray = function(params, arrName, conditions){
 	return User_model.updateMany(params, {$pull: {[arrName]: conditions}});
 }
 E.searchText = function(text){
-	return User_model.find({$text: {$search: text}});
+	// if add "-" before word it will search text where there are no such word
+	return User_model.find({$text: {$search: text}}, 
+		{score: {$meta: "textScore"}}) // show score of searching
+	.sort({score: {$meta: "textScore"}}) // sorting by score
+	.exec();
 }

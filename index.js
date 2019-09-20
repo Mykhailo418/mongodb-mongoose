@@ -59,7 +59,7 @@ db.connect()
 	});
 	await user.removeElemFromArray({email: "anya@gmail.com"}, "listObjects", 
 		{title: "updated"});
-	const searchedText = await user.searchText("simply");
+	const searchedText = await user.searchText("simply Lorem Ipsum random");
 	//console.log(found, foundById, updated, specific, paginated);
 	//console.log(updatedArray, updatedArray2);
 	console.log(searchedText);
