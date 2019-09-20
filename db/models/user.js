@@ -39,6 +39,7 @@ const user = new mongoose.Schema({
 		ref: 'user',
 	}],
 	any: mongoose.Mixed,
+	desc: {type: String},
 }, {timestamps: true});
 // Middlewares(Hooks)
 user.pre('find', function(){
@@ -59,6 +60,7 @@ user.index({
 	country: 1,
 	displayName: 1,
 }, {unique: true});
+user.index({desc: 'text'});
 // Virtuals
 user.virtual('similarUsersCount')
 	.get(function(){

@@ -59,8 +59,10 @@ db.connect()
 	});
 	await user.removeElemFromArray({email: "anya@gmail.com"}, "listObjects", 
 		{title: "updated"});
+	const searchedText = await user.searchText("simply");
 	//console.log(found, foundById, updated, specific, paginated);
-	console.log(updatedArray, updatedArray2);
+	//console.log(updatedArray, updatedArray2);
+	console.log(searchedText);
 	db.disconnect();
 })
 .catch(console.error);
